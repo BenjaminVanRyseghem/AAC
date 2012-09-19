@@ -1,0 +1,81 @@
+\documentclass[a4paper,10pt]{article}
+\input{/Users/benjamin/Documents/Education/LaTeX/macro.tex}
+
+\title{AAC: SŽance 1}
+\author{Benjamin \bsc{Van Ryseghem}}
+
+\begin{document}
+\maketitle
+
+\section{Exercice 1}
+\subsection{Histoire d'$O$}
+
+\paragraph{$n \in O(n^2)$} vrai. 
+
+\begin{math}
+\exists c > 0, \exists n_0 \in \mathbb{N}\ /\  \forall n \in \mathbb{N} > n_0 , n < c.n^2
+\end{math}
+
+Par exemple, cette relation est vrai pour $c = 1$ et $n_0 = 0$.
+
+\paragraph{$n^2 \in O(n)$} faux.
+
+\begin{math}
+\lim \limits_{n \to \infty}\frac{n^2}{n} \mapsto \infty
+\iff \forall c > 0, \exists n_0 \in \mathbb{N} , \forall n >= n_0 n^2 > c.n
+\end{math}
+
+\paragraph{$\log(n) \in O(n)$} vrai.
+
+\begin{math}
+\lim \limits_{n \to \infty}\frac{\log(n)}{n} \mapsto 0
+\end{math}
+
+\paragraph{$n\log(n) \in O(n)$} faux.
+\paragraph{$n \in O(n\log(n))$} vrai.
+\paragraph{$n \in O(n+\log(n))$} vrai.
+\paragraph{$n+log(n) \in O(n)$} vrai.
+\paragraph{$4n^2 \in O(n)$} vrai.
+\paragraph{$100n^2+n+5 \in O(n^2)$} vrai.
+\paragraph{$(\log(n)^2 \in O(n)$} vrai.
+\paragraph{$2^n \in O(3^n)$} vrai.
+\paragraph{$3^n \in O(2^n)$} faux.
+\paragraph{$n! \in O(2^n)$} faux.
+\paragraph{$2^n \in O(n!)$} vrai.
+
+\subsection{\dots et de $\Theta$}
+
+\begin{tabular}{|c|c|}
+\hline
+$n \in \Theta(n^2)$ & faux \\
+$\log(n) \in \Theta(n)$& faux \\
+$n\log(n) \in \Theta(n)$& faux \\
+$n+\log(n) \in \Theta(n)$& vrai \\
+$n^2+n+n\log(n) \in \Theta(n^2)$& vrai \\
+$\log(n)^2 \in \Theta(n)$& faux \\
+$\log(n^2) \in \Theta(\log(n))$& vrai \\
+\hline
+\end{tabular}
+
+\subsection{Vrai ou faux}
+
+
+\begin{tabular}{|c|c|}
+\hline
+$5f \in \Theta(f)$ & vrai \\
+$5f \in O(f)$ & faux \\
+$f \in O(g) \Rightarrow g \in O(f)$ & faux \\
+$f \in O(g) \Rightarrow f \in \Theta(g) $ & faux \\
+$f \in \Theta(g) \Rightarrow f \in O(g)$ & vrai \\
+$f \in \Theta(g) \Rightarrow g \in O(f)$ & vrai \\
+$f \in \Theta(g) \Rightarrow g \in \Theta(f)$ & vrai \\
+$f \in \Theta(g) \Rightarrow f+g \in \Theta(g)$ & vrai \\
+$f \in \Theta(n) \Rightarrow f^2 \in \Theta(n^2)$ & vrai \\
+$f \in O(g), g \in O(h) \Rightarrow f \in O(h)$ & vrai \\
+\hline
+\end{tabular}
+
+
+\signature
+
+\end{document}

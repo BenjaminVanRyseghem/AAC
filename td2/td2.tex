@@ -7,6 +7,47 @@
 \begin{document}
 \maketitle
 
+\section{Exercice 1}
+\subsection{Question 1}
+\begin{tabular}{ r c l}
+Si $n <= 2$&:& $A(n) = 1$ \\
+Sinon&:&  $A(n) = A(n-1)+A(n-2)+ A(n-3)+1$\\
+Donc &:&\\
+&&$A(n) \geq 3A(n-3)$\\
+&&$A(n) \geq 3^{\frac{n}{3}}A(0)$
+\end{tabular}
+
+On en dŽduis que cet algorithme est en $\Omega(3^n)$
+
+\subsection{Question 2}
+\begin{verbatimtab}
+ArrayList<Integer> data; //On suppose data suffisament grand
+
+int T2(int n){
+	int result;
+	if(data[n] != null){ return data[n]);
+	if (n<=2){
+		data[n] = 1;
+		return 1; }
+	result = T2(n-1)+2*T2(n-2)+T2(n-3);
+	data[n] = result;
+	return result;
+}
+\end{verbatimtab}
+
+\section{Exercice 2}
+\subsection{Question 1}
+$\binom{k}{n} = C_n^k  = \dfrac{k!}{(n-k)!n!}$ 
+
+\subsection{Question 2}
+$PL(i, j, r)$ = Cout de placer les $i$ premires stations entre les emplacements 0 et $j$ sachant que le i+1 est en $r$.
+
+Ce que l'on cherche ?
+$PL(k, p-1, p)$
+
+Ce que l'on sait ?
+$PL(i, i-1, r) = \sum_{j=0}^{i-2}(d_{j_a}-d_j)^2 + (d_{i-1} - d_r)^2$
+
 
 
 \signature

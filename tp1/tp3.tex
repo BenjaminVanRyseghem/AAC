@@ -1,0 +1,80 @@
+\documentclass[a4paper,10pt]{article}
+\input{/Users/benjamin/Documents/Education/LaTeX/macro.tex}
+
+\title{AAC: TP1 }
+\author{François \bsc{Lepan}\\Benjamin \bsc{Van Ryseghem}}
+
+\begin{document}
+\maketitle
+
+\section{Erreur de réduction}
+
+\subsection{Calcul du minimum}
+On suppose une image ayant plus de 0 pixel, \emph{i.e.} \\
+\newtheorem{guess}{Hypothesis} 
+\begin{guess}
+\label{hyp:1}
+\begin{minipage}[t]{4.5 in}
+\[\forall start \in \mathbb{N}, \forall stop \in \mathbb{N}, start \leq stop, \displaystyle\sum_{i=start}^{stop}(histo[i]) \geq 0\]
+\end{minipage}
+\end{guess}
+
+Soit $f_{[i, j ]}$ la fonction qui qui à un niveau de gris $x$ retourne l'erreur $f(x)$ associée a ce niveau de gris sur l'intervalle $[start, stop]$.
+
+\begin{eqnarray*}
+f_{[start, stop]}(x)&=&\displaystyle\sum_{i=start}^{stop}histo[i]\times(x-palette[i])^2\\
+f_{[start, stop]}(x)&=&\displaystyle\sum_{i=start}^{stop}histo[i]\times(x^2-2x\times palette[i]+palette[i]^2)\\
+f_{[start, stop]}'(x)&=&\displaystyle\sum_{i=start}^{stop}histo[i]\times(2x-2palette[i])\\
+f_{[start, stop]}'(x)&=&2\times\displaystyle\sum_{i=start}^{stop}histo[i]\times(x-palette[i])\\
+f_{[start, stop]}''(x) &=&2\times\displaystyle\sum_{i=start}^{stop}histo[i]
+\end{eqnarray*}
+Minimiser l'erreur revient a minimiser $f_{[start; stop]}(x)$ pour $x \geq 0$.\\
+Or $f_{[i, j]}$ est convexe sur $\mathbb{R}, \forall i,j \in \mathbb{N}, i \leq j$ car $f_{[i,j]}''(x) \geq 0, \forall x \in \mathbb{R}$ donc $f$ est minimal quand $f'$ est nulle.
+
+\begin{eqnarray*}
+f_{[start, stop]}'(x)&=& 0\\
+\iff 2\times\displaystyle\sum_{i=start}^{stop}histo[i]\times(x-palette[i]) &=& 0\\
+\iff \displaystyle\sum_{i=start}^{stop}histo[i]\times(x-palette[i]) &=& 0\\
+\iff \displaystyle\sum_{i=start}^{stop}(histo[i]\times x) - \displaystyle\sum_{i=start}^{stop}(histo[i]\times palette[i]) &=& 0\\
+\iff\displaystyle\sum_{i=start}^{stop}(histo[i]\times x) &=& \displaystyle\sum_{i=start}^{stop}(histo[i]\times palette[i])\\
+\iff x\times\displaystyle\sum_{i=start}^{stop}(histo[i]) &=& \displaystyle\sum_{i=start}^{stop}(histo[i]\times palette[i])\\
+\end{eqnarray*}
+
+Donc d'apres l'hypothèse~\ref{hyp:1} :
+
+\begin{eqnarray*}
+\iff x\times\displaystyle\sum_{i=start}^{stop}(histo[i]) &=& \displaystyle\sum_{i=start}^{stop}(histo[i]\times palette[i])\\
+\iff x &=& \dfrac{\displaystyle\sum_{i=start}^{stop}(histo[i]\times palette[i])}{\displaystyle\sum_{i=start}^{stop}(histo[i])}\\
+\end{eqnarray*}
+
+Donc l'erreur est minimale quand $x= \dfrac{\displaystyle\sum_{i=start}^{stop}(histo[i]\times palette[i])}{\displaystyle\sum_{i=start}^{stop}(histo[i])}$.
+
+Appellons $x_{[i,j]}$ la valeur de $x$ tel que $f_{[i,j]}$ est minimale.
+
+\subsection{Justification de l'équation de récurrence}
+
+Soit $g$ qui a un intervalle associe l'erreur minimale obtenue en codant les niveaux de l’intervalle de la palette sur une seule couleur.
+
+Donc $g([i,j]) = f_{[i, j]}(x_{[i, j]})$.\\
+Or $f$ est une somme donc associative.\\
+De ce fait, \[\forall x \in \mathbb{R}, \forall i,j,k \in \mathbb{N}, i \leq j \leq k, f_{[i, k]}(x) = f_{[i, j]}(x) + f_{[j, k]}(x)\]
+
+Selon les mêmes propriétés, l'erreur minimal d'un intervalle est la somme des erreurs minimales de ses sous intervalles.\\
+On peut donc écrire:
+\[  \forall i,j,k \in \mathbb{N}, i \leq j \leq k, g([i,k]) = g([i,j] \cup [j,k]) = g([i,j]) + g([j,k])\]
+
+Le problème est de réduire une palette de $\alpha$ niveaux de gris en une palette de $\beta$ niveaux de gris ($\beta < \alpha$) tout en minimisant l'erreur.\\
+Or: 
+\[ \forall \alpha \in \mathbb{N}, \exists t_0,\dots,t_{\beta-1} \in \mathbb{N}, t_0 \leq \dots \leq t_{\beta-1}\ / \ [0, \alpha-1] = \underbrace{[0, t_0] \cup \dots \cup [t_{\beta-2},t_{\beta-1}]}_\text{$\beta$ éléments}\]
+Donc d'après la propriété précédente:
+\begin{eqnarray*}
+g([0, \alpha -1]) &=& g([0, t_0] \cup \dots \cup [t_{\beta-2},t_{\beta-1}]) = g([0, t_0]) + \dots + g([t_{\beta-2},t_{\beta-1}])\\
+g([0, \alpha -1]) &=&  \underbrace{g([0, t_0]) + \displaystyle\sum_{i=0}^{\beta-2}([t_i, t_{i+1}])}_\text{$\beta$ éléments}
+\end{eqnarray*}
+	
+Donc trouver $g([0, \alpha -1])$ revient à trouver les $\beta$ intervalles $[0, t_0],\ \dots\ , [t_{\beta-2},t_{\beta-1}]$.
+
+
+\signature[François \bsc{Lepan}\\Benjamin \bsc{Van Ryseghem}]
+
+\end{document}

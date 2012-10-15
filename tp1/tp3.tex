@@ -19,7 +19,7 @@ On suppose une image ayant plus de 0 pixel, \emph{i.e.} \\
 \end{minipage}
 \end{guess}
 
-Soit $f_{[i, j ]}$ la fonction qui qui à un niveau de gris $x$ retourne l'erreur $f(x)$ associée a ce niveau de gris sur l'intervalle $[start, stop]$.
+Soit $f_{[i, j ]}$ la fonction qui à un niveau de gris $x$ retourne l'erreur $f(x)$ associée à ce niveau de gris sur l'intervalle $[start, stop]$.
 
 \begin{eqnarray*}
 f_{[start, stop]}(x)&=&\displaystyle\sum_{i=start}^{stop}histo[i]\times(x-palette[i])^2\\
@@ -56,8 +56,8 @@ Appellons $x_{[i,j]}$ la valeur de $x$ tel que $f_{[i,j]}$ est minimale.
 Soit $g$ qui a un intervalle associe l'erreur minimale obtenue en codant les niveaux de l’intervalle de la palette sur une seule couleur.
 
 Donc $g([i,j]) = f_{[i, j]}(x_{[i, j]})$.\\
-Or $f$ est une somme donc associative.\\
-De ce fait, \[\forall x \in \mathbb{R}, \forall i,j,k \in \mathbb{N}, i \leq j \leq k, f_{[i, k]}(x) = f_{[i, j]}(x) + f_{[j, k]}(x)\]
+Or $f$ est une somme donc,\\
+ \[\forall x \in \mathbb{R}, \forall i,j,k \in \mathbb{N}, i \leq j \leq k, f_{[i, k]}(x) = f_{[i, j]}(x) + f_{[j, k]}(x)\]
 
 Selon les mêmes propriétés, l'erreur minimal d'un intervalle est la somme des erreurs minimales de ses sous intervalles.\\
 On peut donc écrire:
@@ -72,8 +72,45 @@ g([0, \alpha -1]) &=& g([0, t_0] \cup \dots \cup [t_{\beta-2},t_{\beta-1}]) = g(
 g([0, \alpha -1]) &=&  \underbrace{g([0, t_0]) + \displaystyle\sum_{i=0}^{\beta-2}([t_i, t_{i+1}])}_\text{$\beta$ éléments}
 \end{eqnarray*}
 	
-Donc trouver $g([0, \alpha -1])$ revient à trouver les $\beta$ intervalles $[0, t_0],\ \dots\ , [t_{\beta-2},t_{\beta-1}]$.
+Donc trouver $g([0, \alpha -1])$ revient à trouver les $\beta$ intervalles $[0, t_0],\ \dots\ , [t_{\beta-2},t_{\beta-1}]$ tels que l'erreur soit minimale.
 
+\subsection{Formule de récurrence}
+
+On cherche à exprimer $R_n$ la formule de récurrence au rang $n$.
+
+$R_n$ correspond au $n$ intervalles utilisés lors de la réduction d'une palette de $\alpha$ niveaux de gris en $n$ niveau de gris en minimisant l'erreur.
+
+\paragraph{Initialisation}
+$R_1 = [0, \alpha-1]$\\
+On réduit la palette $[0, \alpha-1]$ en un seul niveau de gris, en minimisant l'erreur.
+
+\paragraph{Récurrence}
+Supposons $n \in \rdbrack1, \alpha\rdbrack$ et supposons connu $R_{n-1}$.\\
+On cherche donc ici à couper $[0, \alpha-1]$ en $n$ intervalles de manière à minimiser l'erreur.\\
+On sait couper $[0, \alpha-1]$ en $n-1$ intervalles d'après $R_{n-1}=\{[0,p_0],[p_0,p_1],\dots,[p_{n-2},p_{n-1}]\}$.\\
+Donc,
+\[ [0, \alpha-1] = \ldbrack0,p_0\rdbrack\cup\ldbrack p_0,p_1\ldbrack\cup\dots\cup\ldbrack p_{n-2},p_{n-1}\rdbrack \]
+Choisissons dans $R_{n-1}$ l'intervalle dont l'erreur est la plus grande, notons le $I = \ldbrack a,b\rdbrack $.\\
+Nous cherchons désormais à couper $I$ en deux intervalles, de manière à réduire l'erreur.\\
+Couper $\ldbrack a, b\rdbrack$ en deux revient à chercher $j \in \ldbrack a, b\rdbrack$.\\
+
+Mais nous souhaitons de plus réduire l'erreur. Pour cela, on peut simplement itérer sur les valeurs de $j$, et de garder la valeur de $j$ pour laquelle l'expression suivante est minimale:
+\[ x_{[a,j]}+x_{[j,b]}\]
+Notons $j_\text{min}$ un tel $j$.\\
+Nous pouvons donc exprimer $I$ comme suit: \[ I = \ldbrack a, j_\text{min} \rdbrack \cup \ldbrack j_\text{min}, b \rdbrack \]
+
+On peut facilement observer que l'erreur d'intervalle de $I$ est supérieur à la somme des erreurs d'intervalle de $\ldbrack a, j_{min} \rdbrack$ et $\ldbrack j_{min}, b \rdbrack$.
+
+De ce fait, nous avons obtenu $n$ intervalles:
+\begin{eqnarray*}
+R_{n-1}=\{ [0,p_0] \cup \dots \cup [p_{k-1},p_k] \cup &I& \cup [p_{k+1},p_{k+2}] \cup \dots \cup [p_{n-2},p_{n-1}] \}\\
+R_n=\{ [0,p_0] \cup \dots \cup [p_{k-1},p_k] \cup &[ a, j_\text{min} ]\cup [j_\text{min}, b]& \cup [p_{k+1},p_{k+2}] \cup \dots \cup [p_{n-2},p_{n-1}] \}\\
+\end{eqnarray*}
+
+Nous avons donc trouver $R_n$ un ensemble de $n$ intervalles fournissant une couverture de $[0, \alpha-1]$ tout en minimisant l'erreur dû à la réduction de la palette en $\beta$ niveaux de gris.
+
+\paragraph{Conclusion}
+En vertu du principe de récurrence, nous avons prouvé que $\forall n \in \ldbrack1, \alpha\rdbrack \ \exists I\ /\ Card(I)=n, [0, \alpha-1] = I$ et tel que l'erreur d'intervalle sur $I$ soit minimale. 
 
 \signature[François \bsc{Lepan}\\Benjamin \bsc{Van Ryseghem}]
 

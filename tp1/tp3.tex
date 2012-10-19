@@ -91,11 +91,11 @@ On sait couper $[0, \alpha-1]$ en $n-1$ intervalles d'après $R_{n-1}=\{[0,p_0],[
 Donc,
 \[ [0, \alpha-1] = \ldbrack0,p_0\rdbrack\cup\ldbrack p_0,p_1\ldbrack\cup\dots\cup\ldbrack p_{n-2},p_{n-1}\rdbrack \]
 Choisissons dans $R_{n-1}$ l'intervalle dont l'erreur est la plus grande, notons le $I = \ldbrack a,b\rdbrack $.\\
-Nous cherchons désormais à couper $I$ en deux intervalles, de manière à réduire l'erreur.\\
-Couper $\ldbrack a, b\rdbrack$ en deux revient à chercher $j \in \ldbrack a, b\rdbrack$.\\
+Nous cherchons désormais à couper $I$ en deux intervalles, de manière à réduire l'erreur.
+Pour cela nous utilisons la fonction $f$ précédemment défini appliquée à l'intervalle $\ldbrack a,b\rdbrack$ afin de trouver la valeur où l'erreur est minimale.
+Cette valeur est ce que nous avons appelé $x_{\ldbrack a,b\rdbrack}$.\\
+Il existe donc un $j=x_{\ldbrack a,b\rdbrack}$ tel que cette erreur soit minimale.\\
 
-Mais nous souhaitons de plus réduire l'erreur. Pour cela, on peut simplement itérer sur les valeurs de $j$, et de garder la valeur de $j$ pour laquelle l'expression suivante est minimale:
-\[ x_{[a,j]}+x_{[j,b]}\]
 Notons $j_\text{min}$ un tel $j$.\\
 Nous pouvons donc exprimer $I$ comme suit: \[ I = \ldbrack a, j_\text{min} \rdbrack \cup \ldbrack j_\text{min}, b \rdbrack \]
 

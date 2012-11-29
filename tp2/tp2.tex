@@ -1,0 +1,246 @@
+\documentclass[a4paper,10pt]{article}
+\input{/Users/benjamin/Documents/Education/LaTeX/macro.tex}
+
+\title{AAC: Séance 2}
+\author{François \bsc{Lepan}\\Benjamin \bsc{Van Ryseghem}}
+
+\begin{document}
+\maketitle
+
+\section{Question 1}
+\textbf{NP} étend \textbf{ExpTime} car tous les problèmes NP-complet possèdent un algorithme de résolution de complexité \emph{exponentielle}.
+
+\section{Question 2}
+\subsection{Définition du certificat}
+Un certificat pour ce problème peut être une liste ordonnée des sommets tous distincts à parcourir afin de couvrir entièrement le graphe.
+
+Les données en entrée sont sous la forme d'une matrice de taille ($n$,$n$), où $n$ est le nombre de sommets du graphes.
+
+On vérifie bien alors que :
+\begin{eqnarray*}
+ \mbox{taille du certificat} &\leq& \mbox{taille des données}\\
+ n &\leq& n^2\\
+ \end{eqnarray*}
+
+Vérifié le certificat revient à vérifier sa taille.
+
+\subsection{Vérification du certificat}
+Un algorithme de vérification du certificat est linéaire par rapport au nombre de sommets, puisqu'il s'agit principalement de vérifier sa taille.
+
+\begin{verbatimtab}
+boolean A(matrice_de_données_de_taille_n_n, G){
+	Si taille de G différent de n retourner Faux;
+	retourner Vrai;
+}
+\end{verbatimtab}
+
+\subsection{Preuve que \emph{TSP} est un problème \emph{NP}}\label{preuveTSPNP}
+
+Nous venons de voir que le certificat est borné polynomialement par la taille des données d'entrée.
+De plus l'algorithme de vérification du certificat à une complexité polynomiale.
+
+Ces deux propriétés prouvent que le problème \emph{Travelling Salesman Problem} est \textbf{NP}.
+
+\subsection{Valeurs possible du certificat}
+Étant donné qu'un certificat est une permutation des $n$ sommets du graphe, alors il existe $n!$ permutations possibles.
+
+\section{HamiltonCycle~$\leq_p$~TSP}
+\subsection{Transformation}
+Afin de montrer que HamiltonCycle $\leq_p$ TSP, il faut et il suffit de trouver une application $red$ telle que: \[ 
+	u \in \mbox{HamiltonCycle} \Leftrightarrow red(u) \in \mbox{TSP}
+\]
+
+La principale différence entre une instance de HamiltonCycle et une instance de TSp est qu'HamiltonCycle nécessite une matrice(n,n) de booléens là où TSP nécessite une matrice(n,n) d'entiers.
+
+\emph{red} est alors une application transformant une matrice(n,n) de booléens en une matrice(n,n) d'entiers:
+\begin{eqnarray*}
+	M_{n,n}(\mathbb{B}) & \rightarrow & M_{n,n}(\mathbb{N})\\
+	u & \mapsto & red(u)
+\end{eqnarray*} où $\mathbb{B} = \{ \mbox{vrai, faux} \}$.
+
+Pour cela définissons l'application $\delta$ telle que:
+\begin{eqnarray*}
+	\mathbb{B} & \rightarrow & \{0,1\}\\
+	u & \mapsto & \mbox{1, si u est \emph{vrai}}\\
+	& & \mbox{$\infty$, si u est \emph{faux}}
+\end{eqnarray*}
+
+Nous allons alors définir \emph{red} en fonction de $\delta$:
+\begin{eqnarray*}
+	M_{n,n}(\mathbb{B}) & \rightarrow & M_{n,n}(\mathbb{N})\\
+	\begin{bmatrix}
+   	b_{1,1}  & \dots & b_{1,n} \\
+   	b_{2,1}  & \dots & b_{2,n}\\
+	&\vdots&\\
+	b_{n,1} &\dots&b_{n,n}\\
+	\end{bmatrix} & \mapsto & \begin{bmatrix}
+   	\delta(b_{1,1})  & \dots & \delta(b_{1,n}) \\
+   	\delta(b_{2,1})  & \dots & \delta(b_{2,n})\\
+	&\vdots&\\
+	\delta(b_{n,1}) &\dots&\delta(b_{n,n})\\
+	\end{bmatrix} 
+\end{eqnarray*}
+
+L'application \emph{red} est évidement polynomiale en $n$, puisqu'il suffit d'itérer sur les $n^2$ termes de la matrice.
+
+Il reste à fournir à TSP une longueur maximale. En choisissant $n$ comme longueur maximale, on a alors qu'il existe un chemin pour TSP seulement s'il existait un cycle Hamiltonien.
+On alors :
+\[ 
+	u \in \mbox{HamiltonCycle} \Rightarrow red(u) \in \mbox{TSP}
+\]
+
+Afin de montrer l'implication inverse, prenons une telle instance de TSP.
+Si cette instance vérifie TSP, cela implique qu'il existe un cycle dont la longueur totale est inférieur à $l$.
+
+Donc il existe un cycle.
+
+Ceci implique donc :
+\[ 
+	u \in \mbox{HamiltonCycle} \Leftarrow red(u) \in \mbox{TSP}
+\]
+
+\subsection{Conclusion}
+De ce fait, nous pouvons conclure que: 
+\[ 
+	u \in \mbox{HamiltonCycle} \Leftrightarrow red(u) \in \mbox{TSP}
+\]
+ 
+On sait de surcroit qu'HamiltonCycle est NP-complet, donc NP-dur. Et comme \mbox{HamiltonCycle}~$\leq_p$~TSP, on en déduit que TSP est \emph{NP-dur}.
+
+De plus, nous avons prouvé à la section~\ref{preuveTSPNP} que TSP est NP.
+Nous en déduisons donc que TSP est \textbf{NP-complet}. 
+
+TSP se réduit polynomialement en HamiltonCycle puisque que TSP est NP et HamiltonCycle NP-dur.
+
+\section{HamiltonPath~$\leq_p$~HamiltonCycle}
+%\subsection{Transformation}
+%Afin de montrer que HamiltonPath~$\leq_p$~HamiltonCycle, il faut et il suffit de trouver une application $red$ telle que: \[ 
+%	u \in \mbox{HamiltonPath} \Leftrightarrow red(u) \in \mbox{HamiltonCycle}
+%\]
+%
+%Soit $u$ une instance de HamiltonPath, donc $u$ est composé de
+%\begin{itemize}
+%	\item $n$, nombre de villes,
+%	\item $D$, matrice de booléens.
+%\end{itemize}
+%
+%Si $u$ est vrai, alors il existe un chemin hamiltonien parcourant le graphe décrit par la matrice $D$.
+%\emph{red} est alors la fonction de $M_{n,n}(\mathbb{B}) \rightarrow M_{n,n}(\mathbb{B})$ qui a pour but de refermer le chemin. Plus précisément, cela consiste à prendre le sommet avec le moins de connexions (la colonne avec le moins de \emph{vrai}), et on le connecte n'importe quel autre sommet avec lequel il n'est pas connecté (hormis lui même).
+%Une telle fonction est polynomiale en $n$, puisqu'il faut parcourir la matrice en entier une fois (ou plus précisément une demi-matrice puisqu'elle est symétrique), puis modifier deux valeurs.
+%
+%De ce fait, $red(u)$ est un chemin hamiltonien plus une arrête fermant le chemin. C'est donc un cycle hamiltonien.
+%On a donc :
+%\[ 
+%	u \in \mbox{HamiltonPath} \Rightarrow red(u) \in \mbox{HamiltonCycle}
+%\]
+%
+%De plus, si $red(u)$ est un cycle hamilonien, alors cela signifie que la permutation des $n$ sommets sans l'arrête ajoutée forme un chemin hamiltonien.
+%On a donc :
+%\[ 
+%	u \in \mbox{HamiltonPath} \Leftarrow red(u) \in \mbox{HamiltonCycle}
+%\]
+%
+%\subsection{Conclusion}
+%
+%On a finalement :
+%\[ 
+%	u \in \mbox{HamiltonPath} \LeftRightarrow red(u) \in \mbox{HamiltonCycle}
+%\]
+%
+%Donc HamilonPath
+
+HamiltonPath est NP-complet donc NP.
+
+HamiltonCycle est NP-complet donc NP-dur.
+
+De ce fait, HamiltonPath~$\leq_p$~HamiltonCycle.
+
+\section{HamiltonPath~$\leq_p$~TSP}
+
+De plus TSP est NP-dur également, donc HamiltonPath~$\leq_p$~TSP.
+
+\section{TSPOpt1/TSPOpt2}
+\subsection{TSPOpt1}
+Si TSPOpt1 était P, alors il existerait un algorithme déterministe polynomiale de résolution de TSPOpt1, \verb?resTSPOpt1()?.
+
+Or s'il existe un $n$ et une matrice $D$ tel que $l$ = TSPOpt1($n$, $D$) alors TSP($n$,$D$,length) est \emph{vrai} si et seulement si $l\leq\mbox{length}$.
+
+Ceci implique donc l'existence d'un algorithme polynomiale permettant de déterminer si TSP est vrai ou non.
+
+\begin{verbatimtab}
+resTSP(n, D, length){
+	return resTSPOpt1(n,D) <= length;
+}
+\end{verbatimtab}
+De ce fait TSP serait P aussi.
+
+\subsection{TSPOpt2}
+De même si TSPOpt2 était P, alors il existerait un algorithme déterministe polynomiale de résolution de TSPOpt2, \verb?resTSPOpt2()?.
+
+On aurait alors un algorithme de résolution de TSP comme suit
+\begin{verbatimtab}
+resTSP(n, D, length){
+	cert = resTSPOpt2(n,D);
+	retourn cert.length() <= length;
+}
+\end{verbatimtab}
+
+Or cet algorithme est polynomiale car resTSPOpt2 l'est.
+De ce fait, TSP serait P.
+
+\subsection{TSP - TSPOpt1}
+Supposons TSP P, et resTSP, un algorithme de résolution de TSP déterministe polynomiale.
+
+\begin{verbatimtab}
+resTSPOPT1(n, D){
+	int length = n*max(D); //où max(D) retourne la plus grande valeur de D
+	while(TSP(n,D,length){
+		length--;
+	}
+
+	return length+1;
+}
+\end{verbatimtab}
+
+Cet algorithme retourne en un temps polynomiale de $n$ un résultat pour TSPOpt1.
+
+\subsection{TSP - TSPOpt2}
+
+\begin{verbatimtab}
+resTSPOPT2(n, D){
+	int length = resTSPOpt1(n,D);
+	int infinite = Integer.MAX_VAL;
+	
+	for (int i = 0; i< n; i++) {
+		for (int j = 0; j< n; j++) {
+			if (D[i][j] != infinite) {
+				int old = D[i][j];
+				D[i][j] = infinite;
+				if (!TSP(n,D,l)){
+					D[i][j] = old;
+				}
+			}
+		}
+	}
+	
+	int currentLine = 0;
+	for (int i = 0; i< n; i++) {
+		result.add(currentLine);
+		for(int j = 0 ; j < n ; j++){
+			if (D[currentLine][j] != infinite) currentLine = j;
+			break;
+		}
+	}
+	
+	
+	return result;
+}
+\end{verbatimtab}
+
+Si TSP est P alors TSPOpt1 l'est aussi ce qui implique que \verb?resTSPOpt1? est déterministe polynomiale en $n$.
+Et si \verb?resTSPOpt1? est polynomiale en $n$ alors \verb?resTSPOpt2? l'est aussi.
+
+De ce fait TSPOpt2 est P.
+
+\signature
+\end{document}

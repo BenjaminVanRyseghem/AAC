@@ -25,3 +25,6 @@
 *.maf
 *.mtc
 *.mtc0
+.metadata
+.metadata/*
+.DS_Store

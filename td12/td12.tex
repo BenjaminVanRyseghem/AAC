@@ -1,0 +1,83 @@
+\documentclass[a4paper,10pt]{article}
+\input{/Users/benjamin/Documents/Education/LaTeX/macro.tex}
+
+\title{AAC: Séance 12}
+\author{Benjamin \bsc{Van Ryseghem}}
+
+\begin{document}
+\maketitle
+
+\section{Exercice 1}
+\small
+\hspace{-1.5cm}
+\begin{tabular}{|l|c|l|}
+\hline
+question ? & réponse & explication(s)\\
+\hline
+\multirow{2}{*}{Tout langage reconnu par un automate est récursif}&\multirow{2}{*}{vrai}&un automate (fini) s'arrête toujours\\
+&&lorsqu'il prend un mot en entrée\\
+$\{a^n/\mbox{n est premier}\}$ est récursif&vrai&on sait écrire un algorithme pour ça\\
+\multirow{2}{*}{Tout langage algébrique est récursif}&\multirow{2}{*}{vrai}&un langage algébrique est reconnu par \\
+&&un automate\\
+Si $L_1$ et $L_2$ sont récursifs alors $L_1\cap L_2$ est récursif&vrai&parce queeeeeeeeeeeee\\
+$L_1\cap L_2$ est récursif et $L_2$ est récursif alors $L_1$ est récursif&faux& $L_2 = \varnothing$ , $L_1$ n'importe quoi non récursif\\
+$L_1\cup L_2$ est récursif et $L_2$ est récursif alors $L_1$ est récursif&faux& $L_1$ non récursif inclue dans $L_2$\\
+L'intersection d'un langage récursif et d'un langage algébrique &\multirow{2}{*}{vrai}&\multirow{2}{*}{\emph{cf.} 3 et 4}\\
+est un langage récursif&&\\
+Le complémentaire d'un langage récursif est récursif&vrai&On retourne \verb?!a? au lieu de \verb?a?\\
+Le complémentaire d'un langage algébrique est récursif&vrai&\emph{cf.}3 et 8\\
+\hline
+\end{tabular}
+\normalsize
+
+\section{Exercice 2}
+Si Goldbach s'arrete
+
+\section{Exercice 3}
+to do
+
+\section{Exercice 4}
+\subsection{Question 1}
+\paragraph{a}
+\mbox{}
+
+\mbox{}
+
+\begin{tabular}{|l | c c |c| c c|}
+\hline
+état&&&v&&\\
+\hline
+q0&&B&a&B&\\
+qR&B&B&B&&\\
+q1&&B&B&B&\\
+\hline
+\end{tabular}
+
+Le mot n'est pas reconnu.
+
+\paragraph{aa}
+\mbox{}
+
+\mbox{}
+
+\begin{tabular}{|l | c c c|c|c c c|}
+\hline
+état&&&&v&&&\\
+\hline
+q0&&&B&a&a&B&\\
+qR&&B&B&a&B&&\\
+qR&B&B&a&B&&&\\
+q1&&B&B&a&B&&\\
+qL&&&B&B&B&B&\\
+q0&&B&B&B&B&&\\
+qf&&B&B&B&B&&\\
+\hline
+\end{tabular}
+
+Le mot est reconnu.
+
+\subsection{Question 2}
+Le langage est l'ensemble des mots composés de a de longueur pair.
+\signature
+
+\end{document}

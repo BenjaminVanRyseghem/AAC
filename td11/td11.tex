@@ -1,0 +1,68 @@
+\documentclass[a4paper,10pt]{article}
+\input{/Users/benjamin/Documents/Education/LaTeX/macro.tex}
+
+\title{AAC: SŽance 11}
+\author{Benjamin \bsc{Van Ryseghem}}
+
+\begin{document}
+\maketitle
+\paragraph{Heuristique}
+\begin{verbatimtab}
+aff <- tableau de taille n
+aff(1) = 1 // sommet 1 dans ens1
+aff(2) = 2 // sommet 2 dans ens2
+
+S <- v(1,2) // l'arrete (1,2) rejoints les ensembles 1 et 2
+Pour sommet: 3 ˆ n faire
+	v1 <- 0: augmentation de S si sommet est affectŽ ˆ ens1
+	v2 <- 0: augmentation de S si sommet est affectŽ ˆ ens2
+	pour i - 1 ˆ sommet-1 faire
+		si aff(1) =1 alors v2 <- v2+v(i, sommet)
+		sinon v1 <- v1+v (i,sommet)
+	si v1>v2 alors
+		S <- S+v1
+		aff(sommet) = 1
+	sinon
+		S <- S+v2
+		aff(sommet) = 2	
+\end{verbatimtab}
+\paragraph{Invariant}
+\[
+S = \displaystyle\sum_{\substack{aff(i)\neq aff(j)\\ i<j<sommet}}v(i,j) \geq \dfrac{1}{2} \displaystyle\sum_{i<j<sommet} v(i,j)
+\]
+
+\paragraph{VŽrification de l'invariant}
+\subparagraph{ƒtape initiale}
+\begin{eqnarray*}
+S = \displaystyle\sum_{\substack{aff(i)\neq aff(j)\\ i<j<sommet}}v(i,j) &=& v(1,2)\\
+\dfrac{1}{2} \displaystyle\sum_{i<j<sommet} v(i,j) &=& \dfrac{1}{2} v(1,2)
+\end{eqnarray*}
+L'invariant est donc respectŽ.
+
+\subparagraph{Durant les itŽrations}
+\begin{eqnarray*}
+S_{sommet+1} &=& S_sommet + max(v_1,v_2)\\
+\dfrac{1}{2} \displaystyle\sum_{i<j<sommet+1} v(i,j) &=& \dfrac{1}{2} \displaystyle\sum_{i<j<sommet} v(i,j) + v_1 + v_2
+\end{eqnarray*}
+
+Or, $\forall a,b$: 
+\begin{eqnarray*}
+2*max(a,b) &\geq& a+b \\
+max(a,b) &\geq& \dfrac{1}{2} (a+b)
+\end{eqnarray*}
+
+Donc l'invariant est bien respectŽ durant les itŽrations.
+
+\paragraph{Preuve d'approximation}
+Ë la fin de l'algorithme, on a 
+\[ S \geq \dfrac{1}{2} \displaystyle\sum_{i<j<sommet} v(i,j) \]
+
+La solution optimale ne peut pas avoir un poids supŽrieur que le poids de toutes les arrtes du graphe $\displaystyle\sum_{i<j<sommet} v(i,j)$.\\
+Donc $OPT \geq S \geq \dfrac{1}{2} \displaystyle\sum_{i<j<sommet} v(i,j)$.\\
+
+L'heuristique gloutonne est une 2-approximation pour le problme de Clustering.
+
+
+\signature
+
+\end{document}

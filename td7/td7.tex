@@ -1,0 +1,80 @@
+\documentclass[a4paper,10pt]{article}
+\input{/Users/benjamin/Documents/Education/LaTeX/macro.tex}
+\usepackage{subscript}
+
+\title{AAC : Séance 7}
+\author{Benjamin \bsc{Van Ryseghem}}
+
+\begin{document}
+\maketitle
+
+\section*{Exercice 7: SAT}
+\subsection*{Question 1}
+
+forme booléenne $\nrightarrow$  forme disjonctive $\rightarrow$ test polynomiale de satisfiabilité $\Rightarrow$
+formule booléenne testée en temps polynomiale.
+
+Passer d'une forme booléenne a une forme disjonctive ne peut pas forcement se faire de façon polynomiale.
+
+
+\section{Exercice 1: Vrai ou Faux}
+\subsection{Question 1}
+\begin{tabular}{l l}
+Toute propriété NP est aussi P & Vrai si P = NP\\
+Toute propriété P est aussi NP & Vrai \\
+Une propriété NP est une propriété non polynomiale & Faux\\
+Il existe une propriété NP polynomiale & Vrai \\
+Il existe une propriété NP non polynomiale & Vrai si P$\neq$NP\\
+Une propriété NP-dur n'est pas P & Vrai si P$\neq$NP\\
+\end{tabular}
+
+\subsection{Question 2}
+\begin{tabular}{l l}
+Si P\textsubscript{1} se réduit polynomialement  en Q, Q est P & Faux \\
+Si Q se réduit polynomialement  en P\textsubscript{1}, Q est P & Vrai \\
+Si Q se réduit polynomialement  en P\textsubscript{2}, Q est NP-dur & Faux \\
+Si P\textsubscript{2} se réduit polynomialement  en Q, Q est NP-dur & Vrai \\
+Si Q se réduit polynomialement  en P\textsubscript{3}, Q est NP & Vrai \\ 
+Si P\textsubscript{3} se réduit polynomialement  en Q, Q est NP & Faux \\ 
+\end{tabular}
+
+\section{Exercice 2}
+\subsection{Question 1 : Montrer que le problème COL est NP-complet}
+\paragraph{Certificat}
+Un certificat pour G est juste un coloriage des noeuds. On peut par exemple le représenter par un tableau de couleurs indexé par les sommets. On a donc :
+\[\mbox{taille du certificat} \Leftarrow \mbox{taille du graphe}
+\](on suppose que la taille d’un graphe est au moins le nombre de sommets plus le nombre d’arcs) La taille d’un certificat est alors bien linéaire, donc polynomialement bornée, par rapport à celle de la donnée.
+
+\paragraph{Algorithme de preuve}
+Un certificat est valide $\Leftrightarrow$ aucun arc ne relie deux noeuds de même couleur: le vérifier est bien polynomial:
+\begin{verbatimtab}
+
+boolean A(col, G){ 
+	Pour chaque arc (s,d) de G		si col(s)=col(d) retourner Faux; 
+	retourner Vrai;
+}
+\end{verbatimtab}
+La complexité de l’algorithme est de l’ordre de card(A) donc bien polynomiale.
+
+\paragraph{Conclusion} Le problème est bien NP. Il reste à montrer qu'il est NP-dur.
+
+Soit une instance de 3-COL définie par  $G_3 = (S_3, A_3)$ un graphe non orienté. On construit une instance de COL de la manière suivante:
+\begin{itemize}
+\item on fixe $G=G_3$.
+\item on fixe k = 3 pour l'instance de COL.
+\item la transformation est bien polynomiale.
+\end{itemize}
+
+\paragraph{Montrons que $I_3 vrai \Leftrightarrow I vrai$}
+Montrons que s'il existe une 3-coloration dans $G_3$ alors dans $G$ aussi et inversement.
+
+Donc 3-COL se réduit polynomialement vers COL.
+Or comme 3-COL est NP-complet, on en déduit que COL est NP-dur.
+
+\paragraph{Conclusion} COL est NP et NP-dur, donc COL est NP-complet.
+
+\subsection{Question 2: }
+
+
+\signature
+\end{document}

@@ -1,0 +1,26 @@
+package tsp;
+
+import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Sommet {
+
+	static Map<Integer,Sommet> sommets = new HashMap<Integer,Sommet>();
+	int id;
+	List<Arrete> arretes_sortantes;
+	List<Arrete> arretes_entrantes;
+	
+	private Sommet(int id){
+		this.id = id;
+	}
+	
+	static public Sommet getSommet(int id){
+		Sommet retrievedSommet = sommets.get(id);
+		if(retrievedSommet == null){
+			retrievedSommet = new Sommet(id);
+		}
+		return retrievedSommet;
+	}
+	
+}

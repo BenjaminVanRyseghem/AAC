@@ -1,5 +1,5 @@
  \documentclass[a4paper,10pt]{article}
-\input{/Users/WannaGetHigh/Documents/workspace/latex/macros.tex}
+\input{/Users/benjamin/Documents/Education/LaTeX/macro.tex}
 
 \title{Résolution pratique du TSP}
 \author{François \bsc{Lepan} Benjamin \bsc{Van Ryseghem}}
@@ -10,9 +10,89 @@
 \section{Heuristiques}
 
 \subsection{Complexité des deux méthodes}
-Construction itérative par ajout du plus proche: $O(n^2)$\\
-Construction par ajout d'arc: $O(n^2)$
+\begin{tabular}{l l}
+Construction itérative par ajout du plus proche: &$O(n^2)$\\
+Construction par ajout d'arc: &$O(n^2)$
+ \end{tabular}
+\section{Borne inférieure}
  
- 
+Pour être une solution du problème initiale, un chemin doit vérifier deux choses:
+\begin{itemize}
+	\item être un circuit, c'est à dire une permutation des $n$ villes,
+	\item être de longueur $l$ minimum.
+\end{itemize}
+
+\paragraph{Circuit}
+Or si $s'$ est une solution du problème réduit, $s'$ vérifie: 
+\begin{itemize}
+	\item être un circuit, c'est à dire une permutation des $n$ villes,
+	\item être de longueur $l'$ minimum.
+\end{itemize}
+
+Il ne reste plus qu'a prouver le deuxième point.
+
+\paragraph{Longueur}
+
+Soit $s'$ une solution de $P'$ le problème réduit. Alors $s'$ peut s'écrire comme
+\[
+s' = v_1, v_2, \dots, v_{n-1}, v_n\ \mbox{où $v_i$ est une des $n$ villes du problème} 
+\]
+
+De plus, la longueur $l'$ de $s'$ peut s'écrire comme suit
+\[
+l' = l'_{v_1,v_2}, l'_{v_2,v_3},\dots,l'_{v_{n-1},v_n}, l'_{v_n,1}\ \mbox{où $l'_{v_i,v_j}$ est la distance entre $v_i$ et $v_j$ pour le problème $P'$} 
+\]
+
+Alors les réductions successives des matrices a pour effet pour chaque ville:
+\begin{enumerate}
+	\item ôter a toutes les arretes sortantes la distance minimale de ces arretes,
+	\item ôter a toutes les arretes entrantes la distance minimale de ces arretes,
+\end{enumerate}
+
+On peut ainsi écrire que 
+\[
+	\forall i,j \in [0,n], i \neq j, l_{v_i,v_j} =  l'_{v_i,v_j} + min_s(v_i) + min_e(v_j)
+\]
+où
+\begin{tabular}{l}
+ $l_{v_i,v_j}$ est la distance entre $v_i$ et $v_j$ pour le problème $P$ non réduit,\\
+ $min_s(v)$ est le minimum des distances des arrêtes sortantes de la ville v,\\
+  $min_e(v)$ est le minimum des distances des arrêtes entrantes de la ville v.\\
+\end{tabular}
+
+On peut alors écrire la longueur $l$ de $s$ la solution de $P$ correspondant à $s'$ comme suit:
+\begin{eqnarray*}
+	l &=& \displaystyle\sum_{i=1}^{n-1} l_{v_i,v_{i+1}} + l_{v_n,v_1}\\
+	l &=& \displaystyle\sum_{i=1}^{n-1} (l'_{v_i,v_{i+1}}+min_s(v_i)+ min_e(v_{i+1}))+ l'_{v_n,v_1} + min_s(v_n)+ min_e(v_1)\\
+	l &=& \displaystyle\sum_{i=1}^{n-1} l'_{v_i,v_{i+1}} + \displaystyle\sum_{i=1}^{n-1} min_s(v_i) + \displaystyle\sum_{i=2}^{n} min_e(v_i) + l'_{v_n,v_1} + min_s(v_n)+ min_e(v_1)\\
+	l &=& l' + \displaystyle\sum_{i=1}^{n} min_s(v_i) + \displaystyle\sum_{i=1}^{n} min_e(v_i)\\
+\end{eqnarray*}
+
+Appellons $d = \displaystyle\sum_{i=1}^{n} min_s(v_i) + \displaystyle\sum_{i=1}^{n} min_e(v_i)$ la borne inférieure de la matrice de problème $P$.
+
+Alors
+\[ l = l' + d \]
+
+Reste à prouver que cette longueur $l$ est minimum.
+\paragraph{Raisonnement par l'absurde}
+Supposons $l_r < l$ tel qu'il existe $s_r$ une solution à $P$.
+D'après le paragraphe précédent, on peut donc déduire l'existence d'une solution $s'_r$ pour $P'$.
+
+La longueur $l'_r$ de $s'_r$ est alors de $l_r-d$.
+
+Or par hypothèse 
+\begin{eqnarray*}
+l_r &<& l\\
+l_r -d&<& l-d\\
+l'_r &<&l'\\
+\end{eqnarray*}
+
+Or $s'$ est supposé une solution optimale, donc il est impossible de trouver une solution $s'_r$ de $P'$ de longueur inférieure.
+
+On aboutit donc à une contradiction. De ce fait, l'hypothèse de l'existence d'une solution de $P$ de longueur minimale est absurde.
+
+\paragraph{Conclusion}
+En conclusion, nous avons trouvé une solution optimale de $P$ à partir d'une solution optimale de $P'$.
+De plus, nou savons calculé sa longueur à partir de la longueur de la solution de $P'$.
 
 \end{document}

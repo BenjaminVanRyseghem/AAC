@@ -14,7 +14,7 @@ public class Sommet {
 	
 	private Sommet(int id){
 		this.id = id;
-		this.sommets.put(id, this);
+		Sommet.sommets.put(id, this);
 		this.arretes_sortantes = new ArrayList<Arrete>();
 		this.arretes_entrantes = new ArrayList<Arrete>();
 	}

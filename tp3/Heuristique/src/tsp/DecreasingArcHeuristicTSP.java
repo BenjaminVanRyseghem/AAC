@@ -38,6 +38,8 @@ public class DecreasingArcHeuristicTSP implements HeuristicTSP {
 			if (edge.getSrc().isArretesSortantesEmpty() && edge.getDest().isArretesEntrantesEmpty() && edge.getDest() != first) {
 				int id = edge.getDest().getId();
 				solution.add(id);
+				edge.getSrc().addArreteSortante(edge);
+				edge.getDest().addArreteEntrante(edge);
 				value+=edge.getValue();
 			}
 			index++;

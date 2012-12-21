@@ -107,8 +107,17 @@ public class NodeTSP implements Node<List<Integer>> {
 	}
 
 	public List<Integer> getSolution() {
-		// TODO
+		if(father == null) return new ArrayList<Integer>();
+
 		List<Integer> listCustomers = new ArrayList<Integer>();
+		List<Integer> father_listCustomers = father.getSolution();
+		int size = father_listCustomers.size();
+		for (int i = 0; i < size; i++) {
+			listCustomers.add(father_listCustomers.get(i));
+		}
+		if(!listCustomers.contains(arrete.getSrc().getId())) listCustomers.add(arrete.getSrc().getId());
+		if(!listCustomers.contains(arrete.getDest().getId())) listCustomers.add(arrete.getDest().getId());
+		
 		return listCustomers;
 	}
 	

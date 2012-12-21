@@ -2,7 +2,7 @@
 \input{/Users/benjamin/Documents/Education/LaTeX/macro.tex}
 
 \title{Résolution pratique du TSP}
-\author{François \bsc{Lepan} Benjamin \bsc{Van Ryseghem}}
+\author{François \bsc{Lepan}\\Benjamin \bsc{Van Ryseghem}}
 
 \begin{document}
 \maketitle
@@ -93,7 +93,7 @@ On aboutit donc à une contradiction. De ce fait, l'hypothèse de l'existence d'un
 
 \paragraph{Conclusion}
 En conclusion, nous avons trouvé une solution optimale de $P$ à partir d'une solution optimale de $P'$.
-De plus, nou savons calculé sa longueur à partir de la longueur de la solution de $P'$.
+De plus, nous savons calculer sa longueur à partir de la longueur de la solution de $P'$.
 
 \paragraph{Implémentation}
 La méthode a une complexité de $O(n^2)$ en $n$ le nombre de villes.
@@ -111,4 +111,7 @@ Pour interdire l'arc $(i,j)$ dans le deuxième, on peut modifier la matrice assoc
 Lorsqu'un arc est interdit, du fait du bannissement de tous les arcs de de la forme $(i,*)$, on peut alors retirer $min_s(v_i)$ de la borne $d$.
 
 De même, du fait du bannissement de tous les arcs de de la forme $(*,j)$, on peut alors retirer $min_e(v_j)$ de la borne $d$.
+
+\signature
+
 \end{document}
